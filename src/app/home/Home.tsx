@@ -83,7 +83,7 @@ export default function Home() {
 
   return (
     <>
-      {svmPredictions.length === 0 && (
+      {svmPredictions.length !== 0 && (
         <div
           className={`${
             toggleResult ? "block" : "hidden"
