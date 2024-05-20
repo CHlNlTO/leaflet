@@ -20,7 +20,8 @@ import { Upload } from "lucide-react";
 import { Instructions } from "@/components/component/Instructions";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import Profiles from "@/components/component/Profiles";
+import { motion } from "framer-motion";
+import { ResultsCard } from "@/components/component/results-card";
 
 export default function Home() {
   const [base64Image, setBase64Image] = useState<string>("");
@@ -84,94 +85,46 @@ export default function Home() {
   return (
     <>
       {svmPredictions.length !== 0 && (
-        <div
+        <motion.div
           className={`${
             toggleResult ? "block" : "hidden"
           } fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-30 text-white`}
           onClick={() => setToggleResult(!toggleResult)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.1, ease: "easeIn" }}
+          exit={{ opacity: 0 }}
         >
-          <Card
-            className="w-full h-full max-w-xl max-h-[600px] m-6 p-6 z-50"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <CardTitle className="font-yeseva_one text-green-900 font-normal">
-              Result
-            </CardTitle>
-            <CardContent>
-              <div className="h-56 w-full pb-5 aspect-square flex justify-center items-center">
-                <Image
-                  width={200}
-                  height={300}
-                  src={base64Image}
-                  alt=""
-                  className="w-full h-48 object-cover"
-                  style={{
-                    objectPosition: "50% 20%",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div className="text-green-900 w-full grid grid-cols-7 justify-center p-6 border border-green-200">
-                <CardTitle className="flex flex-col font-yeseva_one text-xs sm:text-sm justify-start items-start col-span-3 space-y-3">
-                  <div className="flex flex-col">
-                    <span className="text-[7px] sm:text-[10px] font-normal pb-3">
-                      Support Vector Machine Model
-                    </span>
-                    {svmPredictions.map((pred, index) => (
-                      <div key={index} className="flex flex-col">
-                        <span className="text-2xl">
-                          {pred.class.charAt(0).toUpperCase() +
-                            pred.class.slice(1)}
-                        </span>
-                        <span className="text-xs text-green-700 font-normal">
-                          {pred.probability.toFixed(2)}% Probability
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </CardTitle>
-                <div className="flex justify-center col-span-1">
-                  <Separator
-                    orientation="vertical"
-                    className="flex justify-center"
-                  />
-                </div>
-                <CardTitle className="flex flex-col font-yeseva_one text-xs sm:text-sm justify-start items-start col-span-3 space-y-3">
-                  <div className="flex flex-col">
-                    <span className="text-[7px] sm:text-[10px] font-normal pb-3">
-                      Random Forest Classifier Model
-                    </span>
-                    {rfPredictions.map((pred, index) => (
-                      <div key={index} className="flex flex-col">
-                        <span className="text-2xl">
-                          {pred.class.charAt(0).toUpperCase() +
-                            pred.class.slice(1)}
-                        </span>
-                        <span className="text-xs text-green-700 font-normal">
-                          {pred.probability.toFixed(2)}% Probability
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </CardTitle>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+          <ResultsCard
+            svmPredictions={svmPredictions}
+            rfPredictions={rfPredictions}
+            base64Image={base64Image}
+          />
+        </motion.div>
       )}
-      <main className="bg-[#e2fce6] py-12 px-6 md:px-8 lg:px-12 h-screen">
+      <main className="py-12 px-6 md:px-8 lg:px-12 min-h-screen mb-16">
         <section className="max-w-3xl mx-auto text-center space-y-6">
-          <div className="flex flex-col gap-2 mb-5 sm:mb-20">
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-green-950 font-yeseva_one">
-              Identify Leaves with Ease
+          <motion.div
+            className="flex flex-col gap-2 mb-5 sm:mb-20"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeIn" }}
+          >
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-green-900 font-yeseva_one">
+              Identify leaves with ease
             </h1>
             <p className="text-green-950 text-md font-cormorant_garamond font-semibold">
               Upload an image of a leaf and our classifier will identify the
               plant species.
             </p>
-          </div>
-          <div className="flex flex-col lg:flex-row justify-center items-center gap-10 sm:gap-28">
-            <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
+          </motion.div>
+          <motion.div
+            className="flex flex-col lg:flex-row justify-center items-center gap-10 sm:gap-28"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeIn" }}
+          >
+            <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md border">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -231,7 +184,7 @@ export default function Home() {
                     />
                   </div>
                   <LoadingButton
-                    className="w-full text-white bg-green-900 hover:bg-green-950 font-yeseva_one"
+                    className="w-full text-white bg-green-900 hover:bg-green-950 font-yeseva_one disabled:opacity-100"
                     loading={loading}
                     type="submit"
                     disabled={base64Image.length === 0}
@@ -241,10 +194,10 @@ export default function Home() {
                 </form>
               </Form>
             </div>
-            <div className="bg-white rounded-lg shadow-md max-w-md flex justify-center items-center w-full h-full p-6">
+            <div className="bg-white rounded-lg shadow-md max-w-md flex justify-center items-center w-full h-full p-6 border">
               <Instructions />
             </div>
-          </div>
+          </motion.div>
         </section>
       </main>
     </>

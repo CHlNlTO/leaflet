@@ -6,7 +6,6 @@ import type { Metadata } from "next";
 import { Inter, Yeseva_One, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/component/Header";
-import Footer from "@/components/component/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,7 +41,6 @@ export default function RootLayout({
       >
         <Header />
         {children}
-        <Footer />
       </body>
     </html>
   );

@@ -9,8 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Label } from "../ui/label";
-import { instructions } from "@/lib/const";
-import leafImage1 from "@/app/assets/champaka.jpg";
+import { instructions, instructionsImages } from "@/lib/const";
 import Image from "next/image";
 
 export function Instructions() {
@@ -20,20 +19,19 @@ export function Instructions() {
         <Label className="flex justify-center items-start">Instructions</Label>
       </div>
       <CarouselContent>
-        {Array.from({ length: 3 }).map((_, index) => (
+        {Array.from({ length: 4 }).map((_, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
               <Card className="border-0 shadow-none">
                 <CardContent className="flex aspect-square items-start justify-center p-6 relative">
                   <div className="h-full w-full pb-5">
                     <Image
-                      src={leafImage1}
+                      src={instructionsImages[index].url}
                       alt="Uploaded"
                       className="h-full w-full object-cover relative"
                       style={{
                         objectPosition: "center",
                         objectFit: "contain",
-                        transform: "scaleY(-1)",
                       }}
                     />
                   </div>

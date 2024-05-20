@@ -18,13 +18,9 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #fafffc;
   font-family: var(--font-inter), sans-serif;
+  height: 100dvh;
 }
 
 @layer utilities {
