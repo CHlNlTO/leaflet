@@ -56,7 +56,7 @@ export function Tweet() {
       {Array.from({ length: 5 }).map((_, index) => (
         <Card
           key="1"
-          className="max-w-[500px] mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden md:max-w-3xl m-3"
+          className="max-w-[500px] mx-auto bg-white dark:bg-white rounded-xl shadow-md overflow-hidden md:max-w-3xl m-3"
         >
           <div className="md:flex">
             <div className="md:flex-shrink-0">

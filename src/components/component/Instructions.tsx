@@ -23,7 +23,7 @@ export function Instructions() {
           <CarouselItem key={index}>
             <div className="p-1">
               <Card className="border-0 shadow-none">
-                <CardContent className="flex aspect-square items-start justify-center p-6 relative">
+                <CardContent className="bg-white flex aspect-square items-start justify-center p-6 relative">
                   <div className="h-full w-full pb-5">
                     <Image
                       src={instructionsImages[index].url}
