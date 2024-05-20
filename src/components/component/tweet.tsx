@@ -56,11 +56,11 @@ export function Tweet() {
       {Array.from({ length: 5 }).map((_, index) => (
         <Card
           key="1"
-          className="max-w-[500px] mx-auto bg-white dark:bg-white rounded-xl shadow-md overflow-hidden md:max-w-3xl m-3"
+          className="max-w-[500px] mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-3xl m-3"
         >
           <div className="md:flex">
             <div className="md:flex-shrink-0">
-              <span className="object-cover md:w-48 rounded-md bg-gray-100 w-[192px] h-[192px] dark:bg-gray-800" />
+              <span className="object-cover md:w-48 rounded-md bg-gray-100 w-[192px] h-[192px] " />
             </div>
             <div className="p-8 w-full">
               <div className="flex items-center justify-between">
@@ -79,10 +79,10 @@ export function Tweet() {
                     />
                   </Link>
                   <div className="ml-4">
-                    <div className="tracking-wide text-sm text-black dark:text-white font-semibold">
+                    <div className="tracking-wide text-sm text-black font-semibold">
                       {tweets[index].name}
                     </div>
-                    <div className="text-gray-400 dark:text-gray-300">
+                    <div className="text-gray-400">
                       {tweets[index].username}
                     </div>
                   </div>
@@ -91,17 +91,15 @@ export function Tweet() {
                   <LeafIcon className="h-6 w-6 text-green-500 fill-none hover:fill-current active:text-green-700" />
                 </Link>
               </div>
-              <p className="mt-4 text-green-900 dark:text-gray-300">
-                {tweets[index].header}
-              </p>
+              <p className="mt-4 text-green-900">{tweets[index].header}</p>
               <p
-                className="mt-4 text-gray-500 dark:text-gray-300"
+                className="mt-4 text-gray-500"
                 dangerouslySetInnerHTML={{
                   __html: tweets[index].tweet.replace(/\n/g, "<br />"),
                 }}
               ></p>
               <div className="flex mt-6 justify-between items-center gap-4">
-                <div className="flex space-x-4 text-gray-400 dark:text-gray-300">
+                <div className="flex space-x-4 text-gray-400">
                   <div
                     className="flex items-center"
                     onClick={() => handleLikeClick(index)}
@@ -128,7 +126,7 @@ export function Tweet() {
                     </span>
                   </div>
                 </div>
-                <div className="text-gray-400 dark:text-gray-300 hidden sm:flex">
+                <div className="text-gray-400 hidden sm:flex">
                   {tweets[index].date}
                 </div>
               </div>
