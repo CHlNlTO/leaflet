@@ -86,7 +86,7 @@ export default function Header() {
         <SheetTrigger asChild>
           <Menu className="flex md:hidden text-green-900" size="24" />
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="dark:bg-white">
           <motion.nav
             className="flex flex-col items-center gap-6 text-sm text-green-900 font-inter font-bold"
             initial="hidden"
@@ -95,7 +95,9 @@ export default function Header() {
             transition={{ staggerChildren: 0.3 }}
           >
             <SheetHeader>
-              <SheetTitle className="text-green-900">Menu</SheetTitle>
+              <SheetTitle className="text-green-900 dark:text-green-900">
+                Menu
+              </SheetTitle>
             </SheetHeader>
             <motion.div
               variants={linkVariants}
