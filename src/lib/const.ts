@@ -5,6 +5,20 @@ import leafPosition from "@/app/assets/leaf-position.png";
 
 import clark from "@/app/assets/clark.jpg";
 import ben from "@/app/assets/ben.jpg";
+import gelo from "@/app/assets/gelo.jpg";
+import ysa from "@/app/assets/ysa.jpg";
+import jiro from "@/app/assets/jiro.jpg";
+
+import acaciapierra from "@/app/assets/Acacia-Pierra.jpg";
+import apitong from "@/app/assets/Apitong.jpg";
+import balete from "@/app/assets/Balete.jpg";
+import bayabas from "@/app/assets/Bayabas.jpg";
+import dita from "@/app/assets/Dita.jpg";
+import ilangilang from "@/app/assets/Ilang-Ilang.jpg";
+import langka from "@/app/assets/Langka.jpg";
+import mabolo from "@/app/assets/Mabolo.jpg";
+import mahogany from "@/app/assets/Mahogany.jpg";
+import narra from "@/app/assets/Narra.jpg";
 
 export const instructions = [
   "Place leaf on a plain background",
@@ -41,18 +55,16 @@ export const people = [
     id: 2,
     name: "Angelo Castillo",
     designation: "Data Engineer",
-    image:
-      "https://scontent.fmnl3-1.fna.fbcdn.net/v/t39.30808-6/440149654_7385914634823979_4228407535032556155_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=PHfH4-5GOiIQ7kNvgGxrLhq&_nc_ht=scontent.fmnl3-1.fna&oh=00_AYAAxPauS00eGWUYiU2Qu_OBTptAzyz7TlFj1RSBEVGIKg&oe=664EAE05",
-    url: "",
+    image: gelo,
+    url: "https://www.instagram.com/olegcstll",
     username: "@olegcstll",
   },
   {
     id: 3,
     name: "Nikka Ysabel Farofaldane",
     designation: "Data Scientist",
-    image:
-      "https://scontent.fmnl3-4.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=-Y6aeqq909UQ7kNvgEVW-0l&_nc_ht=scontent.fmnl3-4.fna&oh=00_AYB_DG_kDH5BhsNStbBehZEMwkatLtC91JOx2HCcVu5Zww&oe=66704E78",
-    url: "",
+    image: ysa,
+    url: "https://www.instagram.com/_say.ysa_?utm_source=qr",
     username: "@_say.ysa_",
   },
   {
@@ -60,16 +72,138 @@ export const people = [
     name: "Benedict Gutierrez",
     designation: "Machine Performance Engineer",
     image: ben,
-    url: "",
+    url: "https://www.instagram.com/benny_gtrz",
     username: "@benny_gtrz",
   },
   {
     id: 5,
     name: "Jiro Lat",
     designation: "Machine Learning Engineer",
-    image:
-      "https://scontent.fmnl3-2.fna.fbcdn.net/v/t39.30808-6/326940986_646286007500238_7761757026837082842_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=yowLKYdzR3wQ7kNvgH00GU5&_nc_ht=scontent.fmnl3-2.fna&oh=00_AYBqxE5wRK0-4XK8O-aa9k0pga3YNzoz1nidaZGh4G7njw&oe=664EB956",
-    url: "",
+    image: jiro,
+    url: "https://www.instagram.com/girororororororo/",
     username: "@girororororororo",
+  },
+];
+
+export const leaves = [
+  {
+    name: "Acacia Pierra",
+    filipino: "Acacia Pierra",
+    scientific: "Samanea saman",
+    english: "Rain Tree",
+    image: acaciapierra,
+    facts: [
+      "The Rain Tree is a large canopy tree that can grow up to 25 meters tall with a broad crown that spreads as wide as the tree is tall.",
+      'It has a short, stout trunk and a wide canopy of feathery, fern-like leaves which fold in the evening and during rain, giving it the common name "Rain Tree".',
+      "Native to Central and South America, it has been widely introduced in tropical regions, including the Philippines.",
+    ],
+  },
+  {
+    name: "Apitong",
+    filipino: "Apitong",
+    scientific: "Dipterocarpus grandiflorus",
+    english: "Keruing",
+    image: apitong,
+    facts: [
+      "Apitong is a large tropical hardwood tree that can grow up to 60 meters tall with a straight, cylindrical bole that can be free of branches for up to 30 meters.",
+      "It has a thick, fissured bark and a dense, spreading crown.",
+      "The leaves are large, leathery, and elliptic, with prominent veins.",
+    ],
+  },
+  {
+    name: "Balete",
+    filipino: "Balete",
+    scientific: "Ficus balete",
+    english: "Balete Tree or Strangler Fig",
+    image: balete,
+    facts: [
+      "Balete trees are large, fast-growing fig trees with complex root systems that often form intricate and striking aerial roots.",
+      "These trees can grow to impressive sizes, with some species reaching heights of 30 meters or more.",
+      "They are known for their ability to strangle host trees by enveloping them with their roots, eventually taking over the space.",
+    ],
+  },
+  {
+    name: "Bayabas",
+    filipino: "Bayabas",
+    scientific: "Psidium guajava",
+    english: "Guava",
+    image: bayabas,
+    facts: [
+      "Bayabas, or Guava, is a small tropical tree or shrub that typically grows to 3-10 meters in height.",
+      "It has smooth, thin, copper-colored bark that flakes off revealing greenish underbark.",
+      "The leaves are opposite, simple, elliptical to ovate, and aromatic when crushed.",
+    ],
+  },
+  {
+    name: "Dita",
+    filipino: "Dita",
+    scientific: "Alstonia scholaris",
+    english: "Blackboard Tree",
+    image: dita,
+    facts: [
+      "Dita is a tall, evergreen tree that can grow up to 40 meters in height with a straight trunk and a dense, spreading crown.",
+      "The bark is greyish-white and often marked with white latex.",
+      "The leaves are simple, leathery, and arranged in whorls of 4-7 around the stem.",
+    ],
+  },
+  {
+    name: "Ilang-Ilang",
+    filipino: "Ilang-Ilang",
+    scientific: "Cananga odorata",
+    english: "Ylang-Ylang",
+    image: ilangilang,
+    facts: [
+      "Ilang-Ilang is a fast-growing, medium-sized evergreen tree that can reach up to 20 meters in height.",
+      "It has drooping branches and glossy, smooth, elliptical leaves that are about 13-20 cm long.",
+      "It prefers warm, humid climates and can be found in lowland and coastal forests.",
+    ],
+  },
+  {
+    name: "Langka",
+    filipino: "Langka",
+    scientific: "Artocarpus heterophyllus",
+    english: "Jackfruit",
+    image: langka,
+    facts: [
+      "Langka, or Jackfruit, is a large tropical tree that can grow up to 20 meters in height.",
+      "It has a dense, broad canopy with dark green, glossy leaves that are oblong and leathery.",
+      "Prefers well-drained, loamy soils and full sun but can tolerate a variety of soil conditions.",
+    ],
+  },
+  {
+    name: "Mabolo",
+    filipino: "Mabolo",
+    scientific: "Diospyros blancoi",
+    english: "Velvet Apple",
+    image: mabolo,
+    facts: [
+      "Mabolo is a medium-sized evergreen tree that can grow up to 18 meters in height.",
+      "The tree has a dense, rounded crown and a straight trunk with rough, dark bark.",
+      "It grows well in lowland and mid-elevation forests, often found in mixed dipterocarp forests.",
+    ],
+  },
+  {
+    name: "Mahogany",
+    filipino: "Mahogany",
+    scientific: "Swietenia macrophylla",
+    english: "Mahogany",
+    image: mahogany,
+    facts: [
+      "Mahogany is a large, deciduous tree that can grow up to 30-40 meters tall, with a trunk diameter of 1-1.5 meters.",
+      "It has a straight, cylindrical trunk with a smooth, grayish-brown bark that becomes fissured and rough with age.",
+      "The leaves are compound, arranged alternately along the stem, and consist of several pairs of leaflets.",
+    ],
+  },
+  {
+    name: "Narra",
+    filipino: "Narra",
+    scientific: "Pterocarpus indicus",
+    english: "Burmese Rosewood",
+    image: narra,
+    facts: [
+      "Narra is a large deciduous tree that can grow up to 30-40 meters in height, with a trunk diameter that can reach up to 2 meters.",
+      "It has a broad, spreading crown with a high canopy and compound leaves with 5-11 leaflets.",
+      "The fruit is a flat, disc-shaped pod with winged edges, containing one or two seeds.",
+    ],
   },
 ];

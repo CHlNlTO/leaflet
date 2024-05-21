@@ -18,10 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Upload } from "lucide-react";
 import { Instructions } from "@/components/component/Instructions";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import { ResultsCard } from "@/components/component/results-card";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Home() {
   const [base64Image, setBase64Image] = useState<string>("");
@@ -52,10 +51,11 @@ export default function Home() {
     }
   };
 
+  const { toast } = useToast();
+
   const onSubmit = async (leafImage: LeafImage) => {
     setLoading(true);
     if (!base64Image) return;
-    setToggleResult(!toggleResult);
 
     try {
       const response = await fetch("http://127.0.0.1:5000/predict", {
@@ -75,10 +75,18 @@ export default function Home() {
 
       setSvmPredictions(result.svm_predictions);
       setRfPredictions(result.rf_predictions);
-      setLoading(false);
-      form.reset();
+      setToggleResult(!toggleResult);
     } catch (error) {
       console.error("Error:", error);
+      toast({
+        title: "Code 500",
+        description: "Server is not responding. Please try again later.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    } finally {
+      setLoading(false);
+      form.reset();
     }
   };
 
@@ -89,7 +97,10 @@ export default function Home() {
           className={`${
             toggleResult ? "block" : "hidden"
           } fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-30 text-white`}
-          onClick={() => setToggleResult(!toggleResult)}
+          onClick={() => {
+            setToggleResult(!toggleResult);
+            setBase64Image("");
+          }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.1, ease: "easeIn" }}

@@ -63,17 +63,9 @@ export default function Header() {
         >
           <Link
             className="hover:text-[#4da954] transition-colors"
-            href="/features"
+            href="/leaves"
           >
-            Features
-          </Link>
-        </motion.div>
-        <motion.div
-          variants={linkVariants}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <Link className="hover:text-[#4da954] transition-colors" href="#">
-            Feedback
+            Leaf
           </Link>
         </motion.div>
       </motion.nav>
