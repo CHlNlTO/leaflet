@@ -4,6 +4,19 @@ import Link from "next/link";
 import { LeafIcon } from "./Logo";
 import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const headerVariants = {
   hidden: { y: 20, opacity: 0 },
@@ -69,7 +82,54 @@ export default function Header() {
           </Link>
         </motion.div>
       </motion.nav>
-      <Menu className="flex md:hidden text-green-900" size="24" />
+      <Sheet>
+        <SheetTrigger asChild>
+          <Menu className="flex md:hidden text-green-900" size="24" />
+        </SheetTrigger>
+        <SheetContent>
+          <motion.nav
+            className="flex flex-col items-center gap-6 text-sm text-green-900 font-inter font-bold"
+            initial="hidden"
+            animate="visible"
+            variants={headerVariants}
+            transition={{ staggerChildren: 0.3 }}
+          >
+            <SheetHeader>
+              <SheetTitle className="text-green-900">Menu</SheetTitle>
+            </SheetHeader>
+            <motion.div
+              variants={linkVariants}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <Link className="hover:text-[#4da954] transition-colors" href="/">
+                Home
+              </Link>
+            </motion.div>
+            <motion.div
+              variants={linkVariants}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <Link
+                className="hover:text-[#4da954] transition-colors"
+                href="/about"
+              >
+                About
+              </Link>
+            </motion.div>
+            <motion.div
+              variants={linkVariants}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <Link
+                className="hover:text-[#4da954] transition-colors"
+                href="/leaves"
+              >
+                Leaf
+              </Link>
+            </motion.div>
+          </motion.nav>
+        </SheetContent>
+      </Sheet>
     </motion.header>
   );
 }
