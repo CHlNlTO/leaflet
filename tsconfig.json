@@ -26,10 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/ui/background",
-    "src/lib/chatbot.js",
-    "src/lib/chatbot.js",
-    "src/lib/chatbot.js"
+    "src/components/ui/background"
   ],
   "exclude": ["node_modules"]
 }

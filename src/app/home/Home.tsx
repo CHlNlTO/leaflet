@@ -218,7 +218,7 @@ export default function Home() {
                     type="submit"
                     disabled={base64Image.length === 0}
                   >
-                    Classify
+                    <div className="ml-2">Classify</div>
                   </LoadingButton>
                 </form>
               </Form>

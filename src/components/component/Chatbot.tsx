@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, FormEvent } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  FormEvent,
+  ChangeEvent,
+} from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import { Input } from "../ui/input";
 import { Avatar, AvatarFallback } from "../ui/avatar";
@@ -6,9 +12,10 @@ import { Button } from "../ui/button";
 import { IconProps } from "@/lib/types";
 import { LeafIcon } from "./Logo";
 import { motion } from "framer-motion";
-import { Image, Maximize2, Minimize2, UploadIcon } from "lucide-react";
-import { askBot } from "@/lib/chatbot";
+import { Image, Maximize2, Minimize2 } from "lucide-react";
 import { markdownToHtml } from "@/utils/markdownToHtml";
+import { askBot } from "@/lib/chatbot";
+import { LoadingButton } from "../ui/loading-button";
 
 interface Message {
   text: string;
@@ -25,6 +32,9 @@ export default function Chatbot() {
 
   const [newMessage, setNewMessage] = useState("");
   const [isMinimized, setIsMinimized] = useState(true);
+  const [isAsking, setIsAsking] = useState(false);
+  const [base64Image, setBase64Image] = useState<string | null>(null);
+  const [fileBlob, setFileBlob] = useState<Blob | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -37,6 +47,8 @@ export default function Chatbot() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setIsAsking(true);
+
     if (newMessage.trim()) {
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -45,30 +57,47 @@ export default function Chatbot() {
 
       setNewMessage("");
 
-      const response = await askBot(newMessage);
+      console.log(base64Image);
+
+      const response = await askBot({
+        text: newMessage,
+        image: {
+          data: base64Image ?? "",
+          mimeType: fileBlob?.type || "image/jpg",
+        },
+      });
       const htmlResponse = await markdownToHtml(response);
 
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: htmlResponse, isUser: false },
       ]);
+      setIsAsking(false);
     }
   };
 
-  // const handleFileChange = (event: ) => {
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     const file = event.target.files[0];
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
 
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       if (typeof reader.result === "string") {
-  //         setBase64Image(reader.result);
-  //         form.setValue("image", file);
-  //       }
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          // Remove the data URI prefix
+          const base64WithoutPrefix = reader.result.replace(
+            /^data:image\/[a-z]+;base64,/,
+            ""
+          );
+          setBase64Image(base64WithoutPrefix);
+        }
+      };
+
+      const blob = new Blob([file], { type: file.type });
+      setFileBlob(blob);
+
+      reader.readAsDataURL(blob);
+    }
+  };
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized);
@@ -98,9 +127,7 @@ export default function Chatbot() {
               <p className="text-sm font-semibold leading-none text-green-950">
                 Snapfolia
               </p>
-              <p className="text-xs text-gray-800 dark:text-gray-400">
-                Virtual plant expert
-              </p>
+              <p className="text-xs text-gray-800">Virtual plant expert</p>
             </div>
           </div>
           <div className="flex items-center justify-center p-0 pr-2">
@@ -129,8 +156,8 @@ export default function Chatbot() {
                   <div
                     className={`inline-block max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm ${
                       message.isUser
-                        ? "ml-auto bg-green-900 text-white dark:bg-gray-50 dark:text-green-800 mr-2"
-                        : "bg-gray-100 dark:bg-green-800"
+                        ? "ml-auto bg-green-900 text-white mr-2"
+                        : "bg-gray-100"
                     }`}
                     dangerouslySetInnerHTML={{ __html: message.text }}
                   />
@@ -156,7 +183,7 @@ export default function Chatbot() {
                   type="file"
                   accept="image/*"
                   className="absolute hidden"
-                  // onChange={(e) => handleFileChange(e.target.files)}
+                  onChange={(e) => handleFileChange(e)}
                 />
                 <Input
                   autoComplete="off"
@@ -168,14 +195,14 @@ export default function Chatbot() {
                 />
               </div>
 
-              <Button
-                size="icon"
+              <LoadingButton
                 type="submit"
                 className="bg-green-900 hover:bg-green-800 active:bg-green-700 focus-visible:ring-green-900 px-3"
+                loading={isAsking}
               >
-                <SendIcon className="h-4 w-4" />
+                {!isAsking && <SendIcon className="h-4 w-4 text-white" />}
                 <span className="sr-only">Send</span>
-              </Button>
+              </LoadingButton>
             </form>
           </CardFooter>
         </motion.div>
