@@ -1,7 +1,3 @@
-// globals.css
-/* Define your global styles here */
-
-// RootLayout.tsx
 import type { Metadata } from "next";
 import { Inter, Yeseva_One, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";

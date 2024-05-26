@@ -21,6 +21,7 @@ import { Instructions } from "@/components/component/Instructions";
 import { motion } from "framer-motion";
 import { ResultsCard } from "@/components/component/results-card";
 import { useToast } from "@/components/ui/use-toast";
+import Chatbot from "@/components/component/Chatbot";
 
 export default function Home() {
   const [base64Image, setBase64Image] = useState<string>("");
@@ -92,6 +93,23 @@ export default function Home() {
 
   return (
     <>
+      <div id="leaves">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
       {svmPredictions.length !== 0 && (
         <motion.div
           className={`${
@@ -210,6 +228,7 @@ export default function Home() {
             </div>
           </motion.div>
         </section>
+        <Chatbot />
       </main>
     </>
   );

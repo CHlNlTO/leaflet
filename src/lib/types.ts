@@ -20,3 +20,8 @@ export type LeafImage = {
 export interface IconProps {
   className?: string;
 }
+
+export interface Message {
+  text: string;
+  isUser: boolean;
+}

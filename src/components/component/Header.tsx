@@ -4,9 +4,6 @@ import Link from "next/link";
 import { LeafIcon } from "./Logo";
 import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -42,7 +39,7 @@ export default function Header() {
         href="/"
       >
         <LeafIcon className="w-6 h-6 hover:fill-current" />
-        Leaflet
+        Snapfolia
       </Link>
       <motion.nav
         className="hidden md:flex items-center gap-6 text-sm text-green-900 font-inter font-bold"
@@ -55,7 +52,10 @@ export default function Header() {
           variants={linkVariants}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <Link className="hover:text-[#4da954] transition-colors" href="/">
+          <Link
+            className="hover:text-[#4da954] transition-colors font-yeseva_one"
+            href="/"
+          >
             Home
           </Link>
         </motion.div>
@@ -64,7 +64,7 @@ export default function Header() {
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <Link
-            className="hover:text-[#4da954] transition-colors"
+            className="hover:text-[#4da954] transition-colors font-yeseva_one"
             href="/about"
           >
             About
@@ -75,7 +75,7 @@ export default function Header() {
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <Link
-            className="hover:text-[#4da954] transition-colors"
+            className="hover:text-[#4da954] transition-colors font-yeseva_one"
             href="/leaves"
           >
             Leaf
@@ -86,7 +86,7 @@ export default function Header() {
         <SheetTrigger asChild>
           <Menu className="flex md:hidden text-green-900" size="24" />
         </SheetTrigger>
-        <SheetContent className="dark:bg-white">
+        <SheetContent className="dark:bg-white z-[500]">
           <motion.nav
             className="flex flex-col items-center gap-6 text-sm text-green-900 font-inter font-bold"
             initial="hidden"
@@ -103,8 +103,13 @@ export default function Header() {
               variants={linkVariants}
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
-              <Link className="hover:text-[#4da954] transition-colors" href="/">
-                Home
+              <Link
+                className="hover:text-[#4da954] transition-colors focus-visible:ring-green-900"
+                href="/"
+              >
+                <SheetClose className="focus-visible:ring-green-900">
+                  Home
+                </SheetClose>
               </Link>
             </motion.div>
             <motion.div
@@ -115,7 +120,7 @@ export default function Header() {
                 className="hover:text-[#4da954] transition-colors"
                 href="/about"
               >
-                About
+                <SheetClose>About</SheetClose>
               </Link>
             </motion.div>
             <motion.div
@@ -126,7 +131,7 @@ export default function Header() {
                 className="hover:text-[#4da954] transition-colors"
                 href="/leaves"
               >
-                Leaf
+                <SheetClose>Leaf</SheetClose>
               </Link>
             </motion.div>
           </motion.nav>
