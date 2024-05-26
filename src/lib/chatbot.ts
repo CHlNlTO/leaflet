@@ -3,8 +3,16 @@ export async function askBot(data: {
   image: { data: string; mimeType: string } | null;
 }) {
   if (data.image) {
+    let message = "";
+    if (!data.text) {
+      message =
+        "If the image I uploaded is a leaf, identify and describe it for me. If it is not a leaf, then reject it and tell me to upload an image of leaf.";
+    } else {
+      message = data.text;
+    }
+
     const prompt = {
-      text: data.text,
+      text: message,
       image: {
         data: data.image.data,
         mimeType: data.image.mimeType,
@@ -24,7 +32,7 @@ export async function askBot(data: {
     }
 
     return await response.json();
-  } else {
+  } else if (data.text) {
     const response = await fetch("/api/chatbot/text/", {
       method: "POST",
       headers: {

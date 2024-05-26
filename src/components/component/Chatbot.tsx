@@ -8,17 +8,18 @@ import React, {
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import { Input } from "../ui/input";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Button } from "../ui/button";
 import { IconProps } from "@/lib/types";
 import { LeafIcon } from "./Logo";
 import { motion } from "framer-motion";
-import { Image, Maximize2, Minimize2 } from "lucide-react";
+import { ImageIcon, Maximize2, Minimize2 } from "lucide-react";
 import { markdownToHtml } from "@/utils/markdownToHtml";
 import { askBot } from "@/lib/chatbot";
 import { LoadingButton } from "../ui/loading-button";
+import Image from "next/image";
 
 interface Message {
   text: string;
+  image?: string;
   isUser: boolean;
 }
 
@@ -37,45 +38,6 @@ export default function Chatbot() {
   const [fileBlob, setFileBlob] = useState<Blob | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    setIsAsking(true);
-
-    if (newMessage.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: newMessage, isUser: true },
-      ]);
-
-      setNewMessage("");
-
-      console.log(base64Image);
-
-      const response = await askBot({
-        text: newMessage,
-        image: {
-          data: base64Image ?? "",
-          mimeType: fileBlob?.type || "image/jpg",
-        },
-      });
-      const htmlResponse = await markdownToHtml(response);
-
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: htmlResponse, isUser: false },
-      ]);
-      setIsAsking(false);
-    }
-  };
-
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -83,21 +45,66 @@ export default function Chatbot() {
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === "string") {
-          // Remove the data URI prefix
           const base64WithoutPrefix = reader.result.replace(
             /^data:image\/[a-z]+;base64,/,
             ""
           );
           setBase64Image(base64WithoutPrefix);
+          console.log(base64WithoutPrefix);
         }
       };
 
-      const blob = new Blob([file], { type: file.type });
-      setFileBlob(blob);
-
-      reader.readAsDataURL(blob);
+      reader.readAsDataURL(file);
     }
   };
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setIsAsking(true);
+    setBase64Image(null);
+
+    if (base64Image) {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: "", image: base64Image, isUser: true },
+      ]);
+    }
+
+    if (newMessage.trim()) {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: newMessage, isUser: true },
+      ]);
+    }
+
+    if (!newMessage.trim() && !base64Image) {
+      return setIsAsking(false);
+    }
+
+    const response = await askBot({
+      text: newMessage,
+      image: {
+        data: base64Image ?? "",
+        mimeType: fileBlob?.type || "image/jpg",
+      },
+    });
+    const htmlResponse = await markdownToHtml(response);
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: htmlResponse, isUser: false },
+    ]);
+    setNewMessage("");
+    setIsAsking(false);
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized);
@@ -153,14 +160,25 @@ export default function Chatbot() {
             <div className="space-y-3 h-96 max-h-96 overflow-y-auto">
               {messages.map((message, index) => (
                 <div key={index} className="flex flex-col">
-                  <div
-                    className={`inline-block max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm ${
-                      message.isUser
-                        ? "ml-auto bg-green-900 text-white mr-2"
-                        : "bg-gray-100"
-                    }`}
-                    dangerouslySetInnerHTML={{ __html: message.text }}
-                  />
+                  {message.text && (
+                    <div
+                      className={`inline-block max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm ${
+                        message.isUser
+                          ? "ml-auto bg-green-900 text-white mr-2"
+                          : "bg-gray-100"
+                      }`}
+                      dangerouslySetInnerHTML={{ __html: message.text }}
+                    />
+                  )}
+                  {message.image && (
+                    <Image
+                      src={`data:image/jpeg;base64,${message.image}`}
+                      alt="Uploaded"
+                      width={200}
+                      height={200}
+                      className="max-w-[75%] rounded-lg ml-auto bg-green-900 text-white mr-2"
+                    />
+                  )}
                 </div>
               ))}
               <div ref={messagesEndRef} />
@@ -176,8 +194,17 @@ export default function Chatbot() {
                   htmlFor="fileInput"
                   className="absolute left-3 top-2.5 h-5 w-5 text-green-900 hover:text-green-700 active:text-green-500 cursor-pointer"
                 >
-                  <Image className="h-5 w-5" />
+                  <ImageIcon className="h-5 w-5" />
                 </label>
+                {base64Image && (
+                  <Image
+                    src={`data:image/jpeg;base64,${base64Image}`}
+                    alt="Uploaded"
+                    width={200}
+                    height={200}
+                    className="z-[650] absolute w-12 h-full top-[-110%] object-contain bg-gray-100 border border-gray-200 rounded-md"
+                  />
+                )}
                 <input
                   id="fileInput"
                   type="file"
