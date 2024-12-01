@@ -9,11 +9,6 @@ export interface Prediction {
   leaf_detected: boolean;
 }
 
-export interface PredictionResponse {
-  svm_predictions: Prediction[];
-  rf_predictions: Prediction[];
-}
-
 export type LeafImage = {
   image: File;
 };

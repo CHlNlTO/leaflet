@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import React, { useState, ChangeEvent } from "react";
 import Image from "next/image";
 import { LoadingButton } from "../../components/ui/loading-button";
-import { LeafImage, Prediction, PredictionResponse } from "@/lib/types";
+import { LeafImage, Prediction } from "@/lib/types";
 import { useForm } from "react-hook-form";
 import { formSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
