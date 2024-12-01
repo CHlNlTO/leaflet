@@ -83,10 +83,12 @@ export default function Chatbot() {
 
     const response = await askBot({
       text: newMessage,
-      image: {
-        data: base64Image ?? "",
-        mimeType: fileBlob?.type || "image/jpg",
-      },
+      image: base64Image
+        ? {
+            data: base64Image ?? "",
+            mimeType: fileBlob?.type || "image/jpg",
+          }
+        : null,
     });
     const htmlResponse = await markdownToHtml(response);
 
