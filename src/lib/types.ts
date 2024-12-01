@@ -4,8 +4,9 @@ export type Leaf = {
 };
 
 export interface Prediction {
-  class: string;
-  probability: number;
+  label: string;
+  confidence: number;
+  leaf_detected: boolean;
 }
 
 export interface PredictionResponse {

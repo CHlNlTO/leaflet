@@ -25,8 +25,7 @@ import Chatbot from "@/components/component/Chatbot";
 
 export default function Home() {
   const [base64Image, setBase64Image] = useState<string>("");
-  const [svmPredictions, setSvmPredictions] = useState<Prediction[]>([]);
-  const [rfPredictions, setRfPredictions] = useState<Prediction[]>([]);
+  const [prediction, setPrediction] = useState<Prediction>();
   const [loading, setLoading] = useState<boolean>(false);
   const [toggleResult, setToggleResult] = useState<boolean>(false);
 
@@ -56,32 +55,69 @@ export default function Home() {
 
   const onSubmit = async (leafImage: LeafImage) => {
     setLoading(true);
-    if (!base64Image) return;
+
+    // Ensure an image file is selected
+    const file = leafImage.image;
+    if (!file) {
+      toast({
+        title: "Error",
+        description: "No image file selected.",
+        variant: "destructive",
+        duration: 5000,
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ image: base64Image }),
-      });
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch(
+        "https://treesbe.firstasia.edu.ph:5000/upload",
+        {
+          method: "POST",
+          body: formData,
+          credentials: "same-origin",
+        }
+      );
 
       if (!response.ok) {
         setLoading(false);
         throw new Error("Failed to fetch");
       }
 
-      const result: PredictionResponse = await response.json();
+      const result: Prediction = await response.json();
 
-      setSvmPredictions(result.svm_predictions);
-      setRfPredictions(result.rf_predictions);
-      setToggleResult(!toggleResult);
+      console.log("Result", result);
+      console.log("Confidence", result.confidence);
+
+      if (result.leaf_detected) {
+        toast({
+          title: "Leaf Detected",
+          description: `Leaf detected with confidence: ${
+            result.confidence ? result.confidence * 100 : "N/A"
+          }%`,
+          variant: "default",
+          duration: 5000,
+        });
+
+        setPrediction(result);
+
+        setToggleResult(true);
+      } else {
+        toast({
+          title: "No Leaf Detected",
+          description: "The image does not contain a detectable leaf.",
+          variant: "destructive",
+          duration: 5000,
+        });
+      }
     } catch (error) {
       console.error("Error:", error);
       toast({
-        title: "Code 500",
-        description: "Server is not responding. Please try again later.",
+        title: "Error",
+        description: "Failed to upload the file. Please try again later.",
         variant: "destructive",
         duration: 5000,
       });
@@ -110,7 +146,7 @@ export default function Home() {
         <i></i>
         <i></i>
       </div>
-      {svmPredictions.length !== 0 && (
+      {prediction && (
         <motion.div
           className={`${
             toggleResult ? "block" : "hidden"
@@ -124,11 +160,7 @@ export default function Home() {
           transition={{ duration: 0.1, ease: "easeIn" }}
           exit={{ opacity: 0 }}
         >
-          <ResultsCard
-            svmPredictions={svmPredictions}
-            rfPredictions={rfPredictions}
-            base64Image={base64Image}
-          />
+          <ResultsCard prediction={prediction} base64Image={base64Image} />
         </motion.div>
       )}
       <main className="py-12 px-6 md:px-8 lg:px-12 min-h-screen mb-16">

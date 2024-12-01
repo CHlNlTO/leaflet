@@ -4,12 +4,10 @@ import Image from "next/image";
 import { Prediction } from "@/lib/types";
 
 export function ResultsCard({
-  svmPredictions,
-  rfPredictions,
+  prediction,
   base64Image,
 }: {
-  svmPredictions: Prediction[];
-  rfPredictions: Prediction[];
+  prediction: Prediction;
   base64Image: string;
 }) {
   return (
@@ -33,44 +31,22 @@ export function ResultsCard({
         </div>
         <div className="flex flex-col gap-4">
           <div className="space-y-4 mt-6">
-            <h2 className="text-sm font-bold">Support Vector Machine Model</h2>
-            {svmPredictions.map((pred: Prediction, index: number) => (
-              <div className="flex items-center justify-between" key={index}>
+            <h2 className="text-sm font-bold">YoloV8 Model</h2>
+            <div className="flex items-center justify-between">
+              <span className="font-medium text-xs sm:text-sm">
+                {prediction.label.charAt(0).toUpperCase() +
+                  prediction.label.slice(1)}
+              </span>
+              <div className="flex flex-row justify-center items-center gap-6 ">
+                <Progress
+                  className="w-[170px] sm:w-[220px] shadow-sm shadow-green-300 h-2"
+                  value={parseInt(prediction.confidence.toFixed(2))}
+                />
                 <span className="font-medium text-xs sm:text-sm">
-                  {pred.class.charAt(0).toUpperCase() + pred.class.slice(1)}
+                  {prediction.confidence.toFixed(2)}%
                 </span>
-                <div className="flex flex-row justify-center items-center gap-6 ">
-                  <Progress
-                    className="w-[170px] sm:w-[220px] shadow-sm shadow-green-300 h-2"
-                    value={parseInt(pred.probability.toFixed(2))}
-                  />
-                  <span className="font-medium text-xs sm:text-sm">
-                    {pred.probability.toFixed(2)}%
-                  </span>
-                </div>
               </div>
-            ))}
-          </div>
-          <div className="space-y-4 mt-6">
-            <h2 className="text-sm font-bold">
-              Random Forest Classifier Model
-            </h2>
-            {rfPredictions.map((pred: Prediction, index: number) => (
-              <div className="flex items-center justify-between" key={index}>
-                <span className="font-medium text-xs sm:text-sm">
-                  {pred.class.charAt(0).toUpperCase() + pred.class.slice(1)}
-                </span>
-                <div className="flex flex-row justify-center items-center gap-6 ">
-                  <Progress
-                    className="w-[170px] sm:w-[220px] shadow-sm shadow-green-300 h-2"
-                    value={parseInt(pred.probability.toFixed(2))}
-                  />
-                  <span className="font-medium text-xs sm:text-sm">
-                    {pred.probability.toFixed(2)}%
-                  </span>
-                </div>
-              </div>
-            ))}
+            </div>
           </div>
         </div>
       </CardContent>

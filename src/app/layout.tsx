@@ -3,6 +3,7 @@ import { Inter, Yeseva_One, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/component/Header";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
